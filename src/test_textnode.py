@@ -23,7 +23,7 @@ class TestTextNode(unittest.TestCase):
         self.assertNotEqual(node, node3)
 
     def test_eq_text_type(self):
-        image_node = TextNode("This is a node", TextType.IMAGES)
+        image_node = TextNode("This is a node", TextType.IMAGE)
         code_node = TextNode("This is a node", TextType.CODE)
         self.assertNotEqual(image_node, code_node)
 
