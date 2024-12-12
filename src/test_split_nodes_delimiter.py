@@ -51,6 +51,4 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         self.assertEqual(text_nodes[0], expected[0])
         self.assertEqual(text_nodes[1], expected[1])
         self.assertEqual(text_nodes[2], expected[2])
-
-if __name__ == "__main__":
-    unittest.main()
+        
