@@ -17,6 +17,3 @@ class TestLeafNode(unittest.TestCase):
     def test_to_html(self):
         node = LeafNode(tag="div", value="some title", props={"class": "mt-2 px-4", "action": "/save-url"})
         self.assertEqual(node.to_html(), "<div class=\"mt-2 px-4\" action=\"/save-url\">some title</div>")
-
-if __name__ == "__main__":
-    unittest.main()

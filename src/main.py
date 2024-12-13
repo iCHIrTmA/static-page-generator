@@ -3,14 +3,14 @@ from leafnode import LeafNode
 
 def main():
     node = TextNode('hello world', TextType.ITALIC, 'https://scinai.fly.dev')
-    print(node)
+    # print(node)
 
 def text_node_to_html_node(text_node: TextNode) -> LeafNode:
     text_type = text_node.text_type
 
     if text_type.value not in [member.value for member in TextType]:
         raise Exception("invalid text type")
-    if text_type == TextType.NORMAL:
+    if text_type == TextType.TEXT:
         return LeafNode(tag=None, value=text_node.text)
     if text_type == TextType.BOLD:
         return LeafNode(tag='b', value=text_node.text)

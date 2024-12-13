@@ -51,6 +51,4 @@ class TestParentNode(unittest.TestCase):
                 props={"class": "mt-2 px-4", "type": "submit"})
 
         self.assertEqual(node.to_html(), "<p class=\"mt-2 px-4\" type=\"submit\"><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
-
-if __name__ == "__main__":
-    unittest.main()
+    

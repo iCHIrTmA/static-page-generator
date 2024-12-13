@@ -7,7 +7,7 @@ from leafnode import LeafNode
 
 class TestTextToLeafNode(unittest.TestCase):
     def test_normal_text(self):
-        text_node = TextNode("This is a text node in normal", TextType.NORMAL)
+        text_node = TextNode("This is a text node in normal", TextType.TEXT)
         actual_leaf_node = text_node_to_html_node(text_node)
         expected_leaf_node = LeafNode(tag=None, value="This is a text node in normal")
 

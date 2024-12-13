@@ -2,7 +2,6 @@ import unittest
 
 from htmlnode import *
 
-
 class TestHTMLNode(unittest.TestCase):
     def test_eq_basic(self):
         node = HTMLNode("p", "hello world")
@@ -19,6 +18,3 @@ class TestHTMLNode(unittest.TestCase):
     def test_props_to_html(self):
         node = HTMLNode(tag="div", props={"class": "mt-2 px-4", "action": "/save-url"})
         self.assertEqual(node.props_to_html(), "class=\"mt-2 px-4\" action=\"/save-url\"")
-
-if __name__ == "__main__":
-    unittest.main()

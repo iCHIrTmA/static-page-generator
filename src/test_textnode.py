@@ -29,7 +29,3 @@ class TestTextNode(unittest.TestCase):
 
         code_node_2 = TextNode("This is a node", TextType.CODE)
         self.assertEqual(code_node, code_node_2)
-
-
-if __name__ == "__main__":
-    unittest.main()

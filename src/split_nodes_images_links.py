@@ -1,56 +1,73 @@
 from textnode import TextType, TextNode
 from extract_markdown_content import *
-import re
 
 def split_nodes_image(old_nodes:list) -> list:
-    image_nodes = []
-    raw_text_nodes = []
+    nodes = []
 
-    for old_node in old_nodes:
-        images = extract_images(old_node.text)
+    for orig_node in old_nodes:
+        images = extract_images(orig_node.text)
+        # if no images in the current node do not change
+        if not images:
+            # text_node = TextNode(text=old_node.text, text_type=old_node.text_type, url=old_node.url)
+            nodes.append(orig_node)
+            continue
+
+        text_to_search = None
         for image in images:
-            # print('alt_text:', image[0], 'img_src:', image[1])
-            image_nodes.append(TextNode(text=image[0], text_type=TextType.IMAGE, url=image[1]))
+            # print('image', image)
+            if not text_to_search:
+                sections = orig_node.text.split(f"![{image[0]}]({image[1]})", 1)
+            if text_to_search:
+                sections = text_to_search.split(f"![{image[0]}]({image[1]})", 1)
 
-        raw_texts = extract_raw_texts(text=old_node.text, exclude_list=image_nodes)
-        for raw_text in raw_texts:
-            raw_text_nodes.append(TextNode(text=raw_text, text_type=TextType.TEXT))
+            # create node for the first half (searched part) of the section
+            text_node = TextNode(sections[0], TextType.TEXT)
+            nodes.append(text_node)
 
-    return [*image_nodes, *raw_text_nodes]
+            # create node for the image found in the searched part of the text
+            image_node = TextNode(text=image[0], text_type=TextType.IMAGE, url=image[1])
+            nodes.append(image_node)
+
+            # store second half (unsearched part) to a variable to be searched for images in the next iteration
+            text_to_search = sections[1]
+
+        # create node for unsearched text if existing and if all images have been extracted
+        if text_to_search:
+            nodes.append(TextNode(text_to_search, TextType.TEXT))
+
+    # print("split_nodes_image", nodes)
+
+    return nodes
 
 def split_nodes_link(old_nodes:list) -> list:
-    link_nodes = []
-    raw_text_nodes = []
+    nodes = []
 
-    for old_node in old_nodes:
-        links = extract_links(old_node.text)
+    for orig_node in old_nodes:
+        links = extract_links(orig_node.text)
+        # print("split_nodes_link", links)
+        if not links:
+            nodes.append(orig_node)
+            continue
+
+        text_to_search = None
         for link in links:
-            # print('anchor_tag:', link[0], 'url:', link[1])
-            link_nodes.append(TextNode(text=link[0], text_type=TextType.LINK, url=link[1]))
+            if not text_to_search:
+                sections = orig_node.text.split(f"[{link[0]}]({link[1]})", 1)
+            if text_to_search:
+                sections = text_to_search.split(f"[{link[0]}]({link[1]})", 1)
 
-        raw_texts = extract_raw_texts(text=old_node.text, exclude_list=link_nodes)
-        for raw_text in raw_texts:
-            raw_text_nodes.append(TextNode(text=raw_text, text_type=TextType.TEXT))
 
-    return [*link_nodes, *raw_text_nodes]
+            # Create node for the searched part of the section
+            nodes.append(TextNode(sections[0], TextType.TEXT))
 
-def extract_raw_texts(text:str, exclude_list: list) -> list:
-    if not exclude_list:
-        return [text]
+            # Create node for the link found
+            nodes.append(TextNode(text=link[0], text_type=TextType.LINK, url=link[1]))
+            
+            # Store unsearched part of the section to a variable be searched in the next iteration
+            text_to_search = sections[1]
 
-    except_strings = []
+        # Create node for the unsearched text if all links have been found
+        if text_to_search:
+            nodes.append(TextNode(text_to_search, TextType.TEXT))
 
-    for node in exclude_list:
-        if node.text_type == TextType.LINK:
-            except_strings.append(f"[{node.text}]({node.url})") 
-        if node.text_type == TextType.IMAGE:
-            except_strings.append(f"![{node.text}]({node.url})")
-
-    # Create a regex pattern to match any of the substrings to exclude
-    pattern = '|'.join(map(re.escape, except_strings))
-    # Split the text by the pattern
-    parts = re.split(pattern, text)
-    # Filter out empty strings
-    raw_texts = [part for part in parts if part]
-
-    return raw_texts
+    return nodes
