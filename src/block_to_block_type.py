@@ -25,7 +25,7 @@ def is_unordered_list(block: str) -> bool:
     items = block.split("\n")
     items = [item.strip() for item in items]
 
-    return all(item.startswith("* ") for item in items)
+    return all((item.startswith("* ") or item.startswith("- ")) for item in items)
 
 def is_ordered_list(block: str) -> bool:
     items = block.split("\n")
