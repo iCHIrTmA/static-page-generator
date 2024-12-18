@@ -1,8 +1,7 @@
 from textnode import TextType, TextNode
 from extract_markdown_content import *
-import re
 from split_nodes_images_links import *
-from split_nodes_delimiter import *
+from inline_markdown import *
 
 def text_to_textnodes(text:str) -> list:
     nodes = [TextNode(text, TextType.TEXT)]

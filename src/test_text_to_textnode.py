@@ -1,6 +1,6 @@
 import unittest
 
-from split_nodes_delimiter import *
+from inline_markdown import *
 from textnode import TextType, TextNode
 from text_to_textnodes import *
 
