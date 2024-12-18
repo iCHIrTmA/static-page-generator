@@ -1,6 +1,5 @@
 from textnode import TextType, TextNode
 from inline_markdown import *
-from split_nodes_images_links import *
 from inline_markdown import *
 
 def text_to_textnodes(text:str) -> list:
