@@ -1,7 +1,6 @@
 from textnode import TextType, TextNode
 from htmlnode import *
 from markdown_blocks import *
-from block_to_block_type import *
 
 # def markdown_to_html_node(md_text:str) -> HTMLNode:
 #     block_nodes = []

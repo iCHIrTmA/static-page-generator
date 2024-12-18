@@ -116,3 +116,30 @@ This is the same paragraph on a new line
                 "* This is a list\n* with items",
             ],
         )
+
+    def test_get_block_type(self):
+        block_list = {
+            "heading": "# This is a heading",
+            "paragraph": "This is a paragraph of text. It has some **bold** and *italic* words inside of it.",
+            "code": "```\nphp code here\n```",
+            "quote": "> here is an instruction to quote",
+            "unordered_list": """* This is the first list item in a list block\n* This is a list item\n* This is another list item""",
+            "ordered_list": """1. first item\n2. second item\n3. final item"""
+        }
+
+        for block_type, block_text in block_list.items():
+            self.assertTrue(block_type == block_to_block_type(block_text))
+    
+    def test_block_to_block_types(self):
+        block = "# heading"
+        self.assertEqual(block_to_block_type(block), block_type_heading)
+        block = "```\ncode\n```"
+        self.assertEqual(block_to_block_type(block), block_type_code)
+        block = "> quote\n> more quote"
+        self.assertEqual(block_to_block_type(block), block_type_quote)
+        block = "* list\n* items"
+        self.assertEqual(block_to_block_type(block), block_type_ulist)
+        block = "1. list\n2. items"
+        self.assertEqual(block_to_block_type(block), block_type_olist)
+        block = "paragraph"
+        self.assertEqual(block_to_block_type(block), block_type_paragraph)
