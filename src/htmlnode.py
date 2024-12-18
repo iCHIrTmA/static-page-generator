@@ -6,16 +6,23 @@ class HTMLNode():
         self.props = props
 
     def to_html(self):
-        raise NotImplementedError
+        raise NotImplementedError("to_html method not implemented")
 
     def props_to_html(self) -> str:
-        # foreach key value pair in dict, convert into "key=value" string and push to array
-        props_string = list()
-        for key, value in self.props.items():
-            string = f"{key}=\"{value}\""
-            props_string.append(string)
+        # # foreach key value pair in dict, convert into "key=value" string and push to array
+        # props_string = list()
+        # for key, value in self.props.items():
+        #     string = f"{key}=\"{value}\""
+        #     props_string.append(string)
 
-        return ' '.join(props_string)
+        # return ' '.join(props_string)
+    
+        if self.props is None:
+            return ""
+        props_html = ""
+        for prop in self.props:
+            props_html += f' {prop}="{self.props[prop]}"'
+        return props_html
     
     def __eq__(self, other):
         return self.tag == other.tag and \
@@ -24,7 +31,7 @@ class HTMLNode():
             self.props == other.props
     
     def __repr__(self):
-        return f"HTMLNode(tag: {self.tag}, value:{self.value}, children: {self.children}, props: {self.props})"
+        return f"HTMLNode(tag: {self.tag}, value: {self.value}, children: {self.children}, props: {self.props})"
     
 
 
