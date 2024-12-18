@@ -1,5 +1,4 @@
 import unittest
-from parentnode import *
 from markdown_to_blocks import *
 from markdown_to_html_node import *
 

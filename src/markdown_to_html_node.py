@@ -1,6 +1,5 @@
 from textnode import TextType, TextNode
 from htmlnode import *
-from parentnode import *
 from markdown_to_blocks import *
 from block_to_block_type import *
 from text_to_textnodes import *
