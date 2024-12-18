@@ -1,5 +1,5 @@
 from textnode import TextType, TextNode
-from extract_markdown_content import *
+from inline_markdown import *
 from split_nodes_images_links import *
 from inline_markdown import *
 
